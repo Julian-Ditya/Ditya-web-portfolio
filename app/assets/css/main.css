@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* === CUSTOM THEME === */
+@theme {
+  /* Color Palette (5 warna) */
+  --color-neon: #39FF14;
+  --color-dark: #0A0A0A;
+  --color-dark-secondary: #1A1A1A;
+  --color-gray: #6B7280;
+  --color-white: #FAFAFA;
+
+  /* Custom Font */
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Custom Animations */
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-glow: glow 2s ease-in-out infinite;
+  --animate-slide-up: slide-up 0.6s ease-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px var(--color-neon), 0 0 10px var(--color-neon); }
+  50% { box-shadow: 0 0 20px var(--color-neon), 0 0 40px var(--color-neon); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === BASE STYLES === */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+}
