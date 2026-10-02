@@ -12,8 +12,8 @@
   "dependencies": {
     "@formkit/auto-animate": "^0.10.0",
     "@iconify-json/mdi": "^1.2.3",
-    "@iconify-json/simple-icons": "^1.2.93",
-    "@iconify-json/vscode-icons": "^1.2.75",
+    "@iconify-json/simple-icons": "^1.2.98",
+    "@iconify-json/vscode-icons": "^1.2.83",
     "@nuxt/icon": "^2.5.0",
     "@tailwindcss/vite": "^4.3.3",
     "motion": "^13.1.1",
