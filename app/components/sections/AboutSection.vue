@@ -21,7 +21,7 @@
             <div class="relative group">
               <div class="w-full aspect-square rounded-2xl overflow-hidden border border-[var(--color-dark-secondary)] group-hover:border-[var(--color-neon)]/30 transition-all duration-500">
                 <img
-                  src="/images/profile.jpg"
+                  src="/assets/images/profile.jpg"
                   alt="Raditya Julian Primasakti"
                   class="w-full h-full object-cover scale-150 object-[center_30%] group-hover:scale-[1.6] transition-transform duration-700"
                 />

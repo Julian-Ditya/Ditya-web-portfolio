@@ -59,7 +59,7 @@
         <div class="relative">
           <div class="w-72 h-72 md:w-96 md:h-96 rounded-full border-2 border-[var(--color-neon)]/30 animate-float overflow-hidden">
             <img
-              src="/images/profile.jpg"
+              src="/assets/images/profile.jpg"
               alt="Julian Ditya"
               class="w-full h-full object-cover scale-140 object-[center_30%]"
             />

@@ -24,20 +24,23 @@
 </template>
 
 <script setup>
+import larutImg from "~/assets/images/larut-ss.png";
+import mendakiImg from "~/assets/images/mendaki-ss.png";
+
 const projects = [
   {
     title: "Larut Project",
-    description: "Landing page brand teh botolan dengan konsep seduh interaktif. Project tempat aku belajar kalau 'works di localhost' belum tentu works di production.",
-    image: "/images/larut-ss.png",
+    description: "Landing page brand teh botolan dengan konsep seduh interaktif. Project pertama yang aku deploy sendiri — tempat aku belajar kalau 'works di localhost' belum tentu works di production.",
+    image: larutImg,
     url: "https://larut-project.vercel.app/",
     tech: ["Nuxt.js", "Tailwind CSS", "Vercel"],
   },
   {
     title: "Mendaki Project",
     description: "Website open trip pendakian lengkap dengan galeri, itinerary, dan paket harga. Project yang ngajarin aku pentingnya struktur konten yang jelas biar pengunjung langsung paham (dan pengin ikut trip).",
-    image: "/images/mendaki-ss.png",
+    image: mendakiImg,
     url: "https://mendaki-project-pied.vercel.app/",
-    tech: ["Next.js", "JavaScript", "Responsive Design"],
+    tech: ["Vue.js", "JavaScript", "Responsive Design"],
   },
 ];
 </script>
