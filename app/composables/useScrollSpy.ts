@@ -1,28 +1,44 @@
 export function useScrollSpy(sectionIds: string[]) {
-  const activeSection = ref<string>('');
+  const activeSection = ref("");
+  const route = useRoute();
+
+  const update = () => {
+    // Kalau bukan di homepage, tidak ada section yang aktif
+    if (route.path !== "/") {
+      activeSection.value = "";
+      return;
+    }
+
+    // Garis imajiner di 40% layar = penentu section aktif
+    const marker = window.scrollY + window.innerHeight * 0.4;
+    let current = sectionIds[0] || "";
+
+    for (const id of sectionIds) {
+      const el = document.getElementById(id);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        if (top <= marker) current = id;
+      }
+    }
+
+    activeSection.value = current;
+  };
 
   onMounted(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            activeSection.value = entry.target.id;
-          }
-        });
-      },
-      {
-        rootMargin: '-40% 0px -60% 0px',
-      }
-    );
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+  });
 
-    sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
+  // Setiap pindah halaman, hitung ulang
+  watch(
+    () => route.path,
+    () => {
+      setTimeout(update, 50);
+    }
+  );
 
-    onUnmounted(() => {
-      observer.disconnect();
-    });
+  onUnmounted(() => {
+    window.removeEventListener("scroll", update);
   });
 
   return { activeSection };
