@@ -17,7 +17,6 @@
           <h3 class="font-semibold mb-4 text-[var(--color-white)]">Quick Links</h3>
           <ul class="space-y-2">
             <li v-for="item in links" :key="item.name">
-              <!-- Anchor: scroll ke section di homepage -->
               <button
                 v-if="item.type === 'anchor'"
                 @click="goToSection(item.id)"
@@ -25,7 +24,6 @@
               >
                 {{ item.name }}
               </button>
-              <!-- Page: pindah halaman -->
               <NuxtLink
                 v-else
                 :to="item.path"
@@ -44,9 +42,10 @@
             <a
               v-for="social in socials"
               :key="social.name"
-              :href="social.url"
+              :href="social.isEmail ? emailHref : social.url"
               target="_blank"
               rel="noopener noreferrer"
+              :title="social.isEmail ? myEmail : social.name"
               class="w-10 h-10 rounded-lg bg-[var(--color-dark-secondary)] flex items-center justify-center text-[var(--color-gray)] hover:text-[var(--color-neon)] hover:border-[var(--color-neon)]/50 border border-transparent transition-all duration-300"
             >
               <Icon :name="social.icon" class="w-5 h-5" />
@@ -69,7 +68,12 @@
 </template>
 
 <script setup>
+import { useEmailLink } from "~/composables/useEmailLink";
+
 const route = useRoute();
+
+const myEmail = "julianditya007@gmail.com";
+const { emailHref } = useEmailLink(myEmail);
 
 const links = [
   { name: "Home", type: "anchor", id: "home" },
@@ -83,12 +87,11 @@ const links = [
 const socials = [
   { name: "GitHub", icon: "simple-icons:github", url: "https://github.com/Julian-Ditya" },
   { name: "LinkedIn", icon: "simple-icons:linkedin", url: "https://www.linkedin.com/in/julian-ditya/" },
-  { name: "Email", icon: "simple-icons:gmail", url: "mailto:julianditya007@gmail.com" },
+  { name: "Email", icon: "simple-icons:gmail", isEmail: true },
 ];
 
 const goToSection = (id) => {
   if (route.path !== "/") {
-    // Kalau lagi di /projects atau /contact, balik dulu ke home lalu scroll
     navigateTo("/#" + id);
   } else {
     const el = document.getElementById(id);
