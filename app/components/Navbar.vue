@@ -12,27 +12,27 @@
           <button
             v-if="item.type === 'anchor'"
             @click="scrollToSection(item.id)"
-            class="relative group"
-            :class="[
-              'transition-colors duration-300',
-              activeSection === item.id
-                ? 'text-[var(--color-neon)]'
-                : 'text-[var(--color-gray)] hover:text-[var(--color-neon)]'
-            ]"
+            class="relative group transition-colors duration-300"
+            :class="isActive(item) ? 'text-[var(--color-neon)]' : 'text-[var(--color-gray)] hover:text-[var(--color-neon)]'"
           >
             {{ item.name }}
             <span
               class="absolute -bottom-1 left-0 h-0.5 bg-[var(--color-neon)] transition-all duration-300"
-              :class="activeSection === item.id ? 'w-full' : 'w-0 group-hover:w-full'"
+              :class="isActive(item) ? 'w-full' : 'w-0 group-hover:w-full'"
             ></span>
           </button>
+
           <NuxtLink
             v-else
             :to="item.path"
-            class="text-[var(--color-gray)] hover:text-[var(--color-neon)] transition-colors duration-300 relative group"
+            class="relative group transition-colors duration-300"
+            :class="isActive(item) ? 'text-[var(--color-neon)]' : 'text-[var(--color-gray)] hover:text-[var(--color-neon)]'"
           >
             {{ item.name }}
-            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--color-neon)] group-hover:w-full transition-all duration-300"></span>
+            <span
+              class="absolute -bottom-1 left-0 h-0.5 bg-[var(--color-neon)] transition-all duration-300"
+              :class="isActive(item) ? 'w-full' : 'w-0 group-hover:w-full'"
+            ></span>
           </NuxtLink>
         </li>
       </ul>
@@ -56,7 +56,8 @@
             <button
               v-if="item.type === 'anchor'"
               @click="scrollToSection(item.id); isOpen = false"
-              class="block w-full text-left text-[var(--color-gray)] hover:text-[var(--color-neon)] transition-colors py-2"
+              class="block w-full text-left py-2 transition-colors"
+              :class="isActive(item) ? 'text-[var(--color-neon)]' : 'text-[var(--color-gray)] hover:text-[var(--color-neon)]'"
             >
               {{ item.name }}
             </button>
@@ -64,7 +65,8 @@
               v-else
               :to="item.path"
               @click="isOpen = false"
-              class="block text-[var(--color-gray)] hover:text-[var(--color-neon)] transition-colors py-2"
+              class="block py-2 transition-colors"
+              :class="isActive(item) ? 'text-[var(--color-neon)]' : 'text-[var(--color-gray)] hover:text-[var(--color-neon)]'"
             >
               {{ item.name }}
             </NuxtLink>
@@ -75,32 +77,52 @@
   </nav>
 </template>
 
-<<script setup>
-import { useScrollSpy } from '~/composables/useScrollSpy';
+<script setup>
+import { useScrollSpy } from "~/composables/useScrollSpy";
 
 const isOpen = ref(false);
 const route = useRoute();
 
 const navItems = [
-  { id: 'home', name: 'Home', type: 'anchor' },
-  { id: 'about', name: 'About', type: 'anchor' },
-  { id: 'skills', name: 'Skills', type: 'anchor' },
-  { id: 'projects', name: 'Projects', type: 'page', path: '/projects' },
-  { id: 'contact', name: 'Contact', type: 'page', path: '/contact' },
+  { id: "home", name: "Home", type: "anchor" },
+  { id: "about", name: "About", type: "anchor" },
+  { id: "skills", name: "Skills", type: "anchor" },
+  { id: "projects", name: "Projects", type: "page", path: "/projects" },
+  { id: "contact", name: "Contact", type: "page", path: "/contact" },
 ];
 
-const sectionIds = ['home', 'about', 'skills'];
+const sectionIds = ["home", "about", "skills"];
 const { activeSection } = useScrollSpy(sectionIds);
 
+// Anchor aktif kalau di homepage DAN section-nya lagi kelihatan
+// Page aktif kalau route-nya cocok
+const isActive = (item) => {
+  if (item.type === "anchor") {
+    return route.path === "/" && activeSection.value === item.id;
+  }
+  return route.path === item.path;
+};
 
 const scrollToSection = (id) => {
-  if (route.path !== '/') {
-    navigateTo('/#' + id);
+  if (route.path !== "/") {
+    navigateTo("/#" + id);
   } else {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   }
 };
 </script>
+
+<style scoped>
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-down-enter-from,
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+</style>

@@ -83,6 +83,7 @@ const links = [
   { name: "Contact", type: "page", path: "/contact" },
 ];
 
+// ✅ URL ASLI KAMU (sama seperti di contact.vue)
 const socials = [
   { name: "GitHub", icon: "simple-icons:github", url: "https://github.com/Julian-Ditya" },
   { name: "LinkedIn", icon: "simple-icons:linkedin", url: "https://www.linkedin.com/in/julian-ditya/" },
